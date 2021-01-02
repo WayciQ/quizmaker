@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:quizmaker/Helper/functions.dart';
+import 'package:quizmaker/services/auth.dart';
 import 'package:quizmaker/services/database.dart';
 import 'package:quizmaker/views/create_quiz.dart';
 import 'package:quizmaker/views/player_quiz.dart';
+import 'package:quizmaker/views/signin.dart';
 import 'package:quizmaker/widgets/widgets.dart';
 
 class Home extends StatefulWidget {
+  final String nameUser;
+  Home(this.nameUser);
   @override
   _HomeState createState() => _HomeState();
 }
@@ -12,6 +17,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   Stream quizStream;
   DatabaseService databaseService = new DatabaseService();
+  AuthService authService = new AuthService();
+
 
   Widget quizList() {
     return Container(
@@ -36,6 +43,13 @@ class _HomeState extends State<Home> {
     );
   }
 
+  signOut() async {
+    authService.signOut().then((val) {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => SignIn()));
+    });
+  }
+
   @override
   void initState() {
     databaseService.getQuizezData().then((val) {
@@ -50,6 +64,12 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.apps),
+          onPressed: () {
+            signOut();
+          },
+        ),
         title: appBar(context),
         backgroundColor: Colors.transparent,
         elevation: 0.0,
