@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizmaker/views/Ranking/ranking.dart';
 import 'package:quizmaker/widgets/widgets.dart';
 
 class Results extends StatefulWidget {
@@ -53,11 +54,17 @@ class _ResultsState extends State<Results> {
               ),
               GestureDetector(
                   onTap: () {
-                    Navigator.pop(context);
+                    //Navigator.pop(context);
+                    // Navigator.push(
+                    //     context, MaterialPageRoute(builder: (context) => Ranking()));
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Ranking()));
                   },
                   child: blueButton(
                       context: context,
-                      label: "Trở về trang chủ",
+                      label: "Xem bảng xếp hạng",
                       buttonWidth: MediaQuery.of(context).size.width / 2))
             ],
           ),
