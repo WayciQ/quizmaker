@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:quizmaker/Helper/functions.dart';
 import 'package:quizmaker/services/auth.dart';
 import 'package:quizmaker/services/database.dart';
 import 'package:quizmaker/views/create_quiz.dart';
@@ -65,16 +64,17 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.apps),
+          icon: Icon(Icons.logout),
           onPressed: () {
             signOut();
           },
         ),
-        title: appBar(context),
+        title:  appBar(context),
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         iconTheme: IconThemeData(color: Colors.black87),
         brightness: Brightness.light,
+        centerTitle: true,
       ),
       body: quizList(),
       floatingActionButton: FloatingActionButton(

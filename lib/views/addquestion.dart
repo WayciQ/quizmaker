@@ -71,9 +71,9 @@ class _AddQuestionState extends State<AddQuestion> {
                     ),
                     TextFormField(
                       validator: (val) =>
-                          val.isEmpty ? "Nhập câu trả lời 1" : null,
+                          val.isEmpty ? "Nhập đáp án đúng" : null,
                       decoration: InputDecoration(
-                        hintText: "Câu trả lời 1",
+                        hintText: "Đáp án đúng",
                       ),
                       onChanged: (val) {
                         option1 = val;
@@ -86,7 +86,7 @@ class _AddQuestionState extends State<AddQuestion> {
                       validator: (val) =>
                           val.isEmpty ? "Nhập câu trả lời 2" : null,
                       decoration: InputDecoration(
-                        hintText: "Câu trả lời 2",
+                        hintText: "Đáp án sai gây nhiễu",
                       ),
                       onChanged: (val) {
                         option2 = val;
@@ -99,7 +99,7 @@ class _AddQuestionState extends State<AddQuestion> {
                       validator: (val) =>
                           val.isEmpty ? "Nhập câu trả lời 3" : null,
                       decoration: InputDecoration(
-                        hintText: "Câu trả lời 3",
+                        hintText: "Đáp án sai gây nhiễu",
                       ),
                       onChanged: (val) {
                         option3 = val;
@@ -112,7 +112,7 @@ class _AddQuestionState extends State<AddQuestion> {
                       validator: (val) =>
                           val.isEmpty ? "Nhập câu trả lời 4" : null,
                       decoration: InputDecoration(
-                        hintText: "Câu trả lời 4",
+                        hintText: "Đáp án sai gây nhiễu",
                       ),
                       onChanged: (val) {
                         option4 = val;
@@ -127,7 +127,7 @@ class _AddQuestionState extends State<AddQuestion> {
                           },
                           child: blueButton(
                               context: context,
-                              label: "Submit",
+                              label: "Đăng câu hỏi",
                               buttonWidth:
                                   MediaQuery.of(context).size.width / 2 - 36),
                         ),

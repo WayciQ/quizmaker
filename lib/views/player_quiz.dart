@@ -44,6 +44,17 @@ class _PlayQuizState extends State<PlayQuiz> {
 
     return questionModel;
   }
+  ShowResult() async {
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) => Results(
+              correct: _correct,
+              incorrect: _incorrect,
+              total: total,
+            )));
+    //AddUser(name);   updatescore trong user
+  }
 
   @override
   void initState() {
@@ -54,7 +65,7 @@ class _PlayQuizState extends State<PlayQuiz> {
       _correct = 0;
       _incorrect = 0;
       total = questionsSnapshot.documents.length;
-      print("${total} this is total");
+      print("$total this is total");
       setState(() {});
     });
     super.initState();
@@ -76,7 +87,8 @@ class _PlayQuizState extends State<PlayQuiz> {
             questionsSnapshot == null
                 ? Container(
                     child: Center(
-                      child: CircularProgressIndicator(),
+                      child: CircularProgressIndicator(
+                      )
                     ),
                   )
                 : ListView.builder(
@@ -95,17 +107,13 @@ class _PlayQuizState extends State<PlayQuiz> {
           ],
         ),
       ),
+
+
+      // dấu TICK
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.check),
         onPressed: () {
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => Results(
-                        correct: _correct,
-                        incorrect: _incorrect,
-                        total: total,
-                      )));
+          ShowResult();
         },
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quizmaker/Helper/functions.dart';
 import 'package:quizmaker/services/auth.dart';
+import 'package:quizmaker/services/database.dart';
 import 'package:quizmaker/views/signin.dart';
 import 'package:quizmaker/widgets/widgets.dart';
 
@@ -19,6 +20,39 @@ class _SignUpState extends State<SignUp> {
 
   bool _isLoading = false;
 
+  String validateEmail(String Email) {
+    try {
+      String hople1 = '@gmail.com';
+      String hople2 = '@yahoo.com';
+      if (Email.length < 10 )
+      {
+        return 'Email không được dưới 10 ký tự';
+      }
+      else  if (Email.contains(hople1) == false && Email.contains(hople2) == false)
+      {
+        return 'Email không hợp lệ (không có @.gmailcom, @yahoo.com, ....)';
+      }
+      else
+        return null;
+    }
+    catch (e) {
+      return 'Email đã tồn tại';
+    }
+  }
+
+  String validateMatKhau(String inputAge) {
+    try {
+      if (inputAge.length < 6) {
+        return 'Mật khẩu không được dưới 6 ký tự';
+      } else {
+        return null;
+      }
+    }
+    catch (e) {
+      return 'Mật khẩu đã tồn tại';
+    }
+  }
+
   signUp() async {
     if (_formKey.currentState.validate()) {
       setState(() {
@@ -32,6 +66,7 @@ class _SignUpState extends State<SignUp> {
           HelperFuncionts.saveUserLoggedInDetails(isLoggedIn: true);
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => Home(val.name)));
+          AddUser(name);
         }
       });
     }
@@ -39,6 +74,7 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: appBar(context),
@@ -48,93 +84,91 @@ class _SignUpState extends State<SignUp> {
       ),
       body: _isLoading
           ? Container(
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
-            )
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      )
           : Form(
-              key: _formKey,
-              child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 24),
-                // color: Colors.blue,
-                child: Column(
-                  children: [
-                    Spacer(),
-                    TextFormField(
-                      validator: (val) {
-                        return val.isEmpty ? "Nhập Họ và Tên" : null;
-                      },
-                      decoration: InputDecoration(hintText: "Họ và tên"),
-                      onChanged: (val) {
-                        name = val;
-                      },
-                    ),
-                    SizedBox(
-                      height: 6,
-                    ),
-                    TextFormField(
-                      validator: (val) {
-                        return val.isEmpty ? "Nhập Email" : null;
-                      },
-                      decoration: InputDecoration(hintText: "Email"),
-                      onChanged: (val) {
-                        email = val;
-                      },
-                    ),
-                    SizedBox(
-                      height: 6,
-                    ),
-                    TextFormField(
-                      obscureText: true,
-                      validator: (val) {
-                        return val.isEmpty ? "Nhập mật khẩu" : null;
-                      },
-                      decoration: InputDecoration(hintText: "Mât khẩu"),
-                      onChanged: (val) {
-                        password = val;
-                      },
-                    ),
-                    SizedBox(
-                      height: 24,
-                    ),
-                    GestureDetector(
-                        onTap: () {
-                          signUp();
-                        },
-                        child: blueButton(context: context, label: "Sign Up")),
-                    SizedBox(
-                      height: 18,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Đã có tài khoản? ",
-                          style: TextStyle(fontSize: 15.5),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SignIn()));
-                          },
-                          child: Text(
-                            "Đăng nhâp",
-                            style: TextStyle(
-                                fontSize: 15.5,
-                                decoration: TextDecoration.underline),
-                          ),
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height: 80,
-                    ),
-                  ],
-                ),
+        key: _formKey,
+        child: Container(
+          margin: EdgeInsets.symmetric(horizontal: 25),
+          // color: Colors.blue,
+          child: Column(
+            children: [
+              Spacer(),
+              TextFormField(
+                validator: (val) {
+                  return val.isEmpty ? "Nhập Họ và Tên" : null;
+                },
+                decoration: InputDecoration(hintText: "Vui lòng nhập họ tên", labelText: "Tên"),
+                onChanged: (val) {
+                  name = val;
+                },
               ),
-            ),
+              SizedBox(
+                height: 6,
+              ),
+              TextFormField(
+                validator: validateEmail,
+                decoration: InputDecoration(hintText: "Vui lòng nhập Email", labelText: "Email"),
+                onChanged: (val) {
+                  email = val;
+                },
+              ),
+              SizedBox(
+                height: 6,
+              ),
+              TextFormField(
+                obscureText: true,
+                validator: validateMatKhau,
+                decoration: InputDecoration(hintText: "Vui lòng nhập Mật khẩu", labelText: "Mật khẩu"),
+                onChanged: (val) {
+                  password = val;
+                },
+              ),
+              SizedBox(
+                height: 24,
+              ),
+
+              // nút đăng nhập
+              GestureDetector(
+                  onTap: () {
+                    signUp();
+                  },
+                  child: blueButton(context: context, label: "Đăng ký")),
+              SizedBox(
+                height: 18,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Đã có tài khoản? ",
+                    style: TextStyle(fontSize: 15.5),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SignIn()));
+                    },
+                    child: Text(
+                      "Đăng nhâp",
+                      style: TextStyle(
+                          fontSize: 15.5,
+                          decoration: TextDecoration.underline),
+                    ),
+                  )
+                ],
+              ),
+              SizedBox(
+                height: size.height/20,
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
