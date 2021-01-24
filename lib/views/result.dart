@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'file:///C:/Users/WayciQ/Desktop/quizmaker/lib/views/ranking.dart';
 import 'package:quizmaker/widgets/widgets.dart';
+
+import 'ranking.dart';
 
 class Results extends StatefulWidget {
   final int correct, incorrect, total;
