@@ -44,4 +44,13 @@ class DatabaseService
         .collection("QNA")
         .getDocuments();
   }
+  Future<void> addResultData(Map resultData,String quizId) async {
+    await Firestore.instance
+        .collection("Rank")
+        .document("quizId")
+        .collection("QuizResult")
+        .add(resultData).catchError((e) {
+      print(e.toString());
+    });
+  }
 }

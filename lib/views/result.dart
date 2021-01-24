@@ -5,9 +5,9 @@ import 'ranking.dart';
 
 class Results extends StatefulWidget {
   final int correct, incorrect, total;
-
+  final String quizId;
   Results(
-      {@required this.correct, @required this.incorrect, @required this.total});
+      {@required this.correct, @required this.incorrect, @required this.total, @required this.quizId});
   @override
   _ResultsState createState() => _ResultsState();
 }
@@ -61,7 +61,7 @@ class _ResultsState extends State<Results> {
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => Ranking()));
+                            builder: (context) => Ranking(widget.quizId)));
                   },
                   child: blueButton(
                       context: context,

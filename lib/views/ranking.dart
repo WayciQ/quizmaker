@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizmaker/Models/rank.dart';
 import 'package:quizmaker/views/Ranking//generated/GeneratedGroup41Widget.dart';
 import 'package:quizmaker/views/Ranking//generated/GeneratedGroup40Widget.dart';
 import 'package:quizmaker/views/Ranking//generated/GeneratedGroup39Widget.dart';
@@ -10,12 +11,14 @@ import 'package:quizmaker/widgets/widgets.dart';
 
 class Ranking extends StatefulWidget {
 
-  Ranking();
+  final String quizId;
+  Ranking(this.quizId);
   @override
   _ResultsState createState() => _ResultsState();
 }
 
 class _ResultsState extends State<Ranking> {
+  Stream rankStream;
   int score = 1;
   String name = 'Trung';
 

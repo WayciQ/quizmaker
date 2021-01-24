@@ -52,6 +52,7 @@ class _PlayQuizState extends State<PlayQuiz> {
               correct: _correct,
               incorrect: _incorrect,
               total: total,
+              quizId: widget.quizId,
             )));
     //AddUser(name);   updatescore trong user
   }
@@ -71,6 +72,51 @@ class _PlayQuizState extends State<PlayQuiz> {
     super.initState();
   }
 
+  // @override
+  // // Widget build(BuildContext context) {
+  // //   return Scaffold(
+  // //     appBar: AppBar(
+  // //       title: appBar(context),
+  // //       backgroundColor: Colors.transparent,
+  // //       elevation: 0.0,
+  // //       iconTheme: IconThemeData(color: Colors.black54),
+  // //       brightness: Brightness.light,
+  // //     ),
+  // //     body: Container(
+  // //       child: Column(
+  // //         children: [
+  // //           questionsSnapshot == null
+  // //               ? Container()
+  // //               : ListView.builder(
+  // //
+  // //                   padding: EdgeInsets.symmetric(horizontal: 24),
+  // //                   shrinkWrap: true,
+  // //                   physics: ClampingScrollPhysics(),
+  // //                   itemCount: questionsSnapshot.documents.length,
+  // //                   scrollDirection: Axis.horizontal,
+  // //                   itemBuilder: (context, index) {
+  // //                     return QuizPlayTile(
+  // //                       questionModel: getQuestionModelFromDataSnapshot(
+  // //                           questionsSnapshot.documents[index]),
+  // //                       index: index,
+  // //                     );
+  // //                   },
+  // //                 )
+  // //         ],
+  // //       ),
+  // //     ),
+  // //
+  // //
+  // //     // dấu TICK
+  // //     floatingActionButton: FloatingActionButton(
+  // //       child: Icon(Icons.check),
+  // //       onPressed: () {
+  // //         ShowResult();
+  // //       },
+  // //     ),
+  // //   );
+  // // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,30 +127,32 @@ class _PlayQuizState extends State<PlayQuiz> {
         iconTheme: IconThemeData(color: Colors.black54),
         brightness: Brightness.light,
       ),
-      body: Container(
+      body: SingleChildScrollView(
         child: Column(
           children: [
             questionsSnapshot == null
-                ? Container()
-                : ListView.builder(
-
-                    padding: EdgeInsets.symmetric(horizontal: 24),
-                    shrinkWrap: true,
-                    physics: ClampingScrollPhysics(),
-                    itemCount: questionsSnapshot.documents.length,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return QuizPlayTile(
-                        questionModel: getQuestionModelFromDataSnapshot(
-                            questionsSnapshot.documents[index]),
-                        index: index,
-                      );
-                    },
+                ? Container(
+              child: Center(
+                  child: CircularProgressIndicator(
                   )
+              ),
+            )
+                :  ListView.builder(
+              padding: EdgeInsets.symmetric(horizontal: 24),
+              shrinkWrap: true,
+              physics: ClampingScrollPhysics(),
+              itemCount: questionsSnapshot.documents.length,
+              itemBuilder: (context, index) {
+                return QuizPlayTile(
+                  questionModel: getQuestionModelFromDataSnapshot(
+                      questionsSnapshot.documents[index]),
+                  index: index,
+                );
+              },
+            )
           ],
         ),
       ),
-
 
       // dấu TICK
       floatingActionButton: FloatingActionButton(
