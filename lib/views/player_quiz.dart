@@ -85,17 +85,14 @@ class _PlayQuizState extends State<PlayQuiz> {
         child: Column(
           children: [
             questionsSnapshot == null
-                ? Container(
-                    child: Center(
-                      child: CircularProgressIndicator(
-                      )
-                    ),
-                  )
+                ? Container()
                 : ListView.builder(
+
                     padding: EdgeInsets.symmetric(horizontal: 24),
                     shrinkWrap: true,
                     physics: ClampingScrollPhysics(),
                     itemCount: questionsSnapshot.documents.length,
+                    scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
                       return QuizPlayTile(
                         questionModel: getQuestionModelFromDataSnapshot(

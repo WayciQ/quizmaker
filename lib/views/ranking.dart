@@ -53,25 +53,25 @@ class _ResultsState extends State<Ranking> {
                 SizedBox(
                   height: 8,
                 ),
-                Positioned(
+                Container(
                   child: GeneratedGroup39Widget(),
                 ),
                 SizedBox(
                   height: 8,
                 ),
-                Positioned(
+                Container(
                   child: GeneratedGroup40Widget(),
                 ),
                 SizedBox(
                   height: 8,
                 ),
-                Positioned(
+                Container(
                   child: GeneratedGroup41Widget(),
                 ),
                 SizedBox(
                   height: 8,
                 ),
-                Positioned(
+                Container(
                   child: GeneratedGroup42Widget(),
                 ),
                 SizedBox(

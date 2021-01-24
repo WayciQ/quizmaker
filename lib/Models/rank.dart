@@ -1,5 +1,7 @@
-class User {
-  int score;
-  String name;
-  User({this.name, this.score});
+class RankByQuiz {
+  String id;
+  String uid;
+  String quizId;
+  String score;
+  RankByQuiz({this.id, this.uid , this.quizId,this.score});
 }
