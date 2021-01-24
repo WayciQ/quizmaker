@@ -15,7 +15,7 @@ class Generated3Widget extends StatelessWidget {
         style: TextStyle(
           height: 1.171875,
           fontSize: 40.0,
-          fontFamily: 'Roboto',
+          fontFamily: 'Berlin Sans FB Demi Bold',
           fontWeight: FontWeight.w500,
           color: Color.fromARGB(255, 0, 0, 0),
 

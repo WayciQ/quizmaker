@@ -26,8 +26,8 @@ class GeneratedGroup38Widget3 extends StatelessWidget {
               child: GeneratedEllipse1Widget3(),
             ),
             Positioned(
-              left: 7.0,
-              top: 8.0,
+              left: 4.0,
+              top: 6.0,
               right: null,
               bottom: null,
               width: 38.0,

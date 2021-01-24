@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quizmaker/views/Ranking/ranking.dart';
+import 'file:///C:/Users/WayciQ/Desktop/quizmaker/lib/views/ranking.dart';
 import 'package:quizmaker/widgets/widgets.dart';
 
 class Results extends StatefulWidget {
