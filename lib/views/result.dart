@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:quizmaker/services/database.dart';
 import 'package:quizmaker/widgets/widgets.dart';
 
 import 'ranking.dart';
 
 class Results extends StatefulWidget {
   final int correct, incorrect, total;
-  final String quizId;
+  final String quizIdResult,uid;
   Results(
-      {@required this.correct, @required this.incorrect, @required this.total, @required this.quizId});
+      {@required this.correct,
+        @required this.incorrect,
+        @required this.total,
+        @required this.quizIdResult,
+        @required this.uid});
   @override
   _ResultsState createState() => _ResultsState();
 }
 
 class _ResultsState extends State<Results> {
+  DatabaseService databaseService = new DatabaseService();
+  bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,13 +62,7 @@ class _ResultsState extends State<Results> {
               ),
               GestureDetector(
                   onTap: () {
-                    //Navigator.pop(context);
-                    // Navigator.push(
-                    //     context, MaterialPageRoute(builder: (context) => Ranking()));
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Ranking(widget.quizId)));
+                    createRankingResult();
                   },
                   child: blueButton(
                       context: context,
@@ -73,4 +74,22 @@ class _ResultsState extends State<Results> {
       ),
     );
   }
-}
+
+  createRankingResult() async {
+      print(widget.correct.toString());
+      Map<String, String> quizMap = {
+        "quizId": widget.quizIdResult,
+        "uid": widget.uid,
+        "score": widget.correct.toString(),
+      };
+      await databaseService.addResultData(quizMap,  widget.quizIdResult).then((val) {
+        setState(() {
+          _isLoading = false;
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => Ranking(widget.quizIdResult)));
+        });
+      });
+    }
+  }
+
+

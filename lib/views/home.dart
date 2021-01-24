@@ -7,8 +7,8 @@ import 'package:quizmaker/views/signin.dart';
 import 'package:quizmaker/widgets/widgets.dart';
 
 class Home extends StatefulWidget {
-  final String nameUser;
-  Home(this.nameUser);
+  final String idUser;
+  Home(this.idUser);
   @override
   _HomeState createState() => _HomeState();
 }
@@ -35,6 +35,7 @@ class _HomeState extends State<Home> {
                       desc: snapshot.data.documents[index].data["quizDesc"],
                       title: snapshot.data.documents[index].data["quizTitle"],
                       quizid: snapshot.data.documents[index].data["quizId"],
+                      userid: widget.idUser,
                     );
                   });
         },
@@ -93,18 +94,20 @@ class QuizTile extends StatelessWidget {
   final String title;
   final String desc;
   final String quizid;
+  final String userid;
   QuizTile(
       {@required this.imgUrl,
       @required this.title,
       @required this.desc,
-      @required this.quizid});
+      @required this.quizid,
+      @required this.userid});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => PlayQuiz(quizid)));
+            context, MaterialPageRoute(builder: (context) => PlayQuiz(quizid,userid)));
       },
       child: Container(
         margin: EdgeInsets.only(bottom: 8),

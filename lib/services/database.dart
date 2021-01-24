@@ -1,14 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-Future<void> AddUser(String displayName) async {
-  CollectionReference users = Firestore.instance.collection('Users');
-  FirebaseAuth auth = FirebaseAuth.instance;
-  FirebaseUser user = await auth.currentUser();
-  String uid = user.uid.toString();
-  users.add({'displayName': displayName, 'uid': uid, 'score' : 0});
-  return;
-}
+// ignore: non_constant_identifier_names
+
 
 class DatabaseService
  {
@@ -21,7 +15,14 @@ class DatabaseService
       print(e.toString());
     });
   }
-
+  Future<void> addUser(Map UserData, String uid) async {
+    await Firestore.instance
+        .collection("Users").document(uid)
+        .setData(UserData)
+        .catchError((e) {
+      print(e.toString());
+    });
+  }
   Future<void> addQuestionData(Map questionData, String quizId) async {
     await Firestore.instance
         .collection("Quiz")
@@ -36,7 +37,13 @@ class DatabaseService
   getQuizezData() async {
     return await Firestore.instance.collection("Quiz").snapshots();
   }
-
+  getCollection(QuerySnapshot snapshot) {
+    List<Map<dynamic, dynamic>> list = new List();
+    list = snapshot.documents.map((DocumentSnapshot docSnapshot){
+      return docSnapshot.data;
+    }).toList();
+    return list;
+  }
   getQuizData(String quizId) async {
     return await Firestore.instance
         .collection("Quiz")
@@ -47,10 +54,22 @@ class DatabaseService
   Future<void> addResultData(Map resultData,String quizId) async {
     await Firestore.instance
         .collection("Rank")
-        .document("quizId")
+        .document(quizId)
         .collection("QuizResult")
         .add(resultData).catchError((e) {
       print(e.toString());
     });
+  }
+
+  getResultData(String quizId) async {
+    return await Firestore.instance.collection("Rank")
+        .document(quizId)
+        .collection("QuizResult")
+        .orderBy("score",descending: true)
+        .limit(4)
+        .getDocuments();
+  }
+  getUserData(String uid) async {
+    return await Firestore.instance.collection("Users").document(uid).get();
   }
 }

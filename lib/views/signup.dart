@@ -14,10 +14,10 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   final _formKey = GlobalKey<FormState>();
-  String name, email, password;
+  String name, email, password,id;
 
   AuthService authService = new AuthService();
-
+  DatabaseService databaseService = new DatabaseService();
   bool _isLoading = false;
 
   String validateEmail(String Email) {
@@ -60,18 +60,26 @@ class _SignUpState extends State<SignUp> {
       });
       authService.signUpWithEmailAndPassword(email, password).then((val) {
         if (val != null) {
+          print(val.uid);
+          id = val.uid;
           setState(() {
             _isLoading = false;
           });
+          signUpUser(name,id);
           HelperFuncionts.saveUserLoggedInDetails(isLoggedIn: true);
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => Home(val.name)));
-          AddUser(name);
+              context, MaterialPageRoute(builder: (context) => Home(val.uid)));
         }
       });
     }
   }
-
+  signUpUser(String name, String id) async{
+    Map<String, String> userMap = {
+      "name": name,
+      "uid": id,
+    };
+    await databaseService.addUser(userMap,id);
+  }
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

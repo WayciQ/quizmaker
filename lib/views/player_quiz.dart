@@ -7,8 +7,8 @@ import 'package:quizmaker/widgets/quiz_play_widgets.dart';
 import 'package:quizmaker/widgets/widgets.dart';
 
 class PlayQuiz extends StatefulWidget {
-  final String quizId;
-  PlayQuiz(this.quizId);
+  final String quizId, iduuser;
+  PlayQuiz(this.quizId,this.iduuser);
   @override
   _PlayQuizState createState() => _PlayQuizState();
 }
@@ -52,14 +52,15 @@ class _PlayQuizState extends State<PlayQuiz> {
               correct: _correct,
               incorrect: _incorrect,
               total: total,
-              quizId: widget.quizId,
+              quizIdResult: widget.quizId,
+              uid: widget.iduuser,
             )));
-    //AddUser(name);   updatescore trong user
+    //AddUser(name);   update trong user
   }
 
   @override
   void initState() {
-    print("${widget.quizId}");
+   // print("${widget.iduuser}");
     databaseService.getQuizData(widget.quizId).then((val) {
       questionsSnapshot = val;
       _notAttempted = 0;
